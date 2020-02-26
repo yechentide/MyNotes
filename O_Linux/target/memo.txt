@@ -1,0 +1,4 @@
+wc -l 能统计文本行数
+主机名大多保存在/etc/hostname
+/etc/sysconfig/network-scripts 目录存放着网卡的配置文件
+/etc/yum.repos.d/里存放着Yum仓库的配置文件

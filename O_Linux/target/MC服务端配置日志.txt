@@ -1,0 +1,51 @@
+MC服务端配置日志
+
+LD_LIBRARY_PATH=. ./bedrock_server
+
+https://minecraft.server-memo.net/bedrock_server_install/#i
+https://www.52zhoujia.cn/article/9
+https://leaf47.com/594
+
+
+错误1：./bedrock_server: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+解决方法：升级OpenSSL
+rpm -qa | grep openssl
+	openssl-libs-1.0.2k-19.el7.x86_64
+	openssl-1.0.2k-19.el7.x86_64
+openssl version
+	OpenSSL 1.0.2k-fips  26 Jan 2017
+ldconfig -p  | grep libssl
+	libssl3.so (libc6,x86-64) => /lib64/libssl3.so
+      libssl.so.10 (libc6,x86-64) => /lib64/libssl.so.10
+      
+yum -y install perl-core
+yum -y install gcc
+yum -y install perl
+yum -y install zlib-devel
+wget https://www.openssl.org/source/openssl-1.1.0g.tar.gz
+tar zxvf openssl-1.1.0g.tar.gz
+cd openssl-1.1.0g
+
+
+
+错误2：./bedrock_server: /lib64/libm.so.6: version `GLIBC_2.27' not found (required by ./bedrock_server)
+./bedrock_server: /lib64/libstdc++.so.6: version `CXXABI_1.3.11' not found (required by ./bedrock_server)
+./bedrock_server: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by ./bedrock_server)
+./bedrock_server: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.22' not found (required by ./bedrock_server)
+./bedrock_server: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by ./bedrock_server)
+./bedrock_server: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by ./libCrypto.so)
+解决方法：升级libstdc++ (gcc)
+
+yum -y install gcc-c++
+yum -y install wget
+yum -y install bzip2
+
+
+
+错误3：./bedrock_server: /lib64/libm.so.6: version `GLIBC_2.27' not found (required by ./bedrock_server)
+解决方法：升级libm (glibc)
+
+
+
+
+

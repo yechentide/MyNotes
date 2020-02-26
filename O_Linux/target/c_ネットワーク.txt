@@ -1,0 +1,70 @@
+
+● IPアドレス & サブネットマスク
+● IPアドレス & クラス
+● プライベートIPアドレス & グローバルIPアドレス
+　　　ネットワークアドレス & ブロードキャストアドレス
+
+● ポート番号
+	less /etc/services	で確認できる
+
+● ホスト名 & ドメイン名
+	・コンピュータに名前をつける ---> ホスト名
+		hostname	でホスト名を確認できる
+	・ホスト名をIPアドレスの対応は、DNSによって管理されている
+	・広義のホスト名 = 狭義のホスト名 + ドメイン名
+		例：　www.google.com = www + google.com
+
+● ネットワークインターフェース
+	・ifconfigコマンドで調べる、eth0から見る
+		inet 172.19.122.42  netmask 255.255.240.0  broadcast 172.19.127.255
+		inet6 fe80::803:d250:83f0:46b9%en0 prefixlen 64 secured scopeid 0x6
+	・ipコマンドで調べる ( CentOS7ではこっちをおすすめ ) 
+		$ ip addr show eth0
+		eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> ......
+		link/ether 00:16:3e:08:bf:c0 brd ff:ff:ff:ff:ff:ff
+		inet 172.19.122.42/20 brd 172.19.127.255 scope global dynamic eth0
+		.....
+
+● Linuxのネットワーク設定
+	ネットワークの処理 ---> NetworkManager ---> nmcliコマンド
+	・ネットワークインターフェースの一覧と状態の確認
+		# nmcli device
+	・ネットワークインターフェースの詳細を表示
+		# nmcli device show eth0
+	・ホスト名の変更
+		# nmcli general hostname 新ホスト名
+		# hostnamectl set-hostname 新ホスト名
+	・IPアドレスの設定
+		nmcli connection modify ネットワークインターフェース名 ipv4.addresses IPアドレス
+		固定IPアドレスを使わず、DHCPでIPアドレスを設定スト場合、省略してcとしても良い
+		nmcli c modify ネットワークインターフェース名 ipv4.addresses IPアドレス
+		------SSHログイン時に試すな！VPSのグローバルIPアドレスを変更するな！！！！------
+	・デフォルトDNSサーバーの設定
+		# nmcli connection modify ネットワークインターフェース名 ipv4.dns IPアドレス
+			GoogleのDNSサーバーの8.8.8.8にするには
+			# nmcli connection modify "System eth0" ipv4.dns 8.8.8.8
+			設定を反映させるには、一回NetworkManagerを再起動
+			# systemctl restart NetworkManager
+	・ネットワークの疎通確認
+		ping [-c 回数] ホスト/IPアドレス
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

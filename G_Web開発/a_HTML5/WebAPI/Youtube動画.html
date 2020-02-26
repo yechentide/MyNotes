@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>YouTubeのムービーを組み込む</title>
+</head>
+
+<body>
+
+    <section>
+        <h2>埋め込みコードで組み込む</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/u5XboOOktq4" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h2>JavaScriptで組み込む</h2>
+        <div id="player"></div>
+        <br>(C)2009-2017 KEMCO/WorldWideSoftware<br>
+        <script>
+            // IFrame Player API コード を読み込む
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // IFrame Player API コードが読み込まれると onYouTubeIframeAPIReady関数が実行される
+            function onYouTubeIframeAPIReady() {
+                // 動画プレーヤーを挿入する YT.Player オブジェクトを作成する
+                var player = new YT.Player('player', {
+                    width: '576',
+                    height: '324',
+                    videoId: 'u5XboOOktq4', // YouTube動画ID
+                    events: {
+                        'onReady': onPlayerReady // 準備ができたらと再生を始めるように指示
+                    }
+                });
+            }
+
+            // 再生を開始する関数
+            function onPlayerReady(event) {
+                event.target.playVideo();
+            }
+        </script>
+    </section>
+
+</body>
+
+</html>

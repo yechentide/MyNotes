@@ -1,0 +1,130 @@
+
+● セキュリティ対策の基本
+	・yum-cronサービスで自動アップデート
+	・サービスの確認
+		稼動しているサービスを必要最小限に止める
+		systemctl list-unit-files -t service		// サービスの自動起動の状態を確認
+			staticは自動起動に設定できないもの
+		不要なサービスの自動起動を無効化
+		# systemctl disable xxx.service
+	・開いているポートの確認
+		netstat -ltu		// 開いているTCP/UDPポートを表示
+		netstat -lt			// 開いているTCPポートを表示
+		netstat -lt4		// 開いているTCPポートで、IPv4のみを表示
+		CentOS 7からはnetstatの代わりに、ssコマンドを使うことが推奨されている
+		ss [オプション]
+			-l		// 接続を待ち受け(listen)しているポートのみを表示
+			-t		// TCPを表示
+			-u		// UDPを表示
+			-n		// ポートやホストを数値で表示
+			-p		// ポートを開いているプロセスを表示
+			-4		// IPv4のみを表示
+			-6		// IPv6のみを表示
+	・ログイン管理
+		vim /etc/ssh/sshd_config
+			必ずrootユーザーのログインを禁止する
+				PermitRootLogin no
+			パスワードログイン許可
+				PasswordAuthentication yes
+			ログイン可能なユーザーを作業用のユーザーのみに限定する
+				AllowUsers ユーザー名
+			sshポートを変更
+		設定を変更した後、SSHサービスを再起動
+			# systemctl restart sshd.service
+		ログイン履歴も確認できる
+			$ last			// 全て
+			$ lastlog		// ユーザーごとの、最終ログイン記録
+	・ログの管理
+		CentOS 7ではログを記録する仕組みは、
+		①各種ログメッセージを取りまとめて扱うrsyslogサービス、
+		②各種サービスやシステムの起動を管理するsystemd、
+		③Apacheなどで単独でログを管理するサービス、　　　の３つである
+		主なログファイル：①③
+			/var/log/messages		// システムの汎用ログファイル
+			/var/log/secure			// 認証関連のログファイル
+			/var/log/boot.log		// サービスの起動・停止記録
+			/var/log/cron			// cronジョブのログファイル
+			/var/log/dmesg			// カーネルが出力するメッセージの記録
+			/var/log/maillog		// メールサブシステムのログファイル
+			/var/log/yum.log		// YUMによるパッケージ情報操作記録
+			/var/log/httpd/			// Apacheが出力するログファイル用ディレクトリ
+			/var/log/mariadb/		// MariaDBが出力するログファイル用ディレクトリ
+		ログファイルには１つのログメッセージにつき１行で記録される
+			日時　ホスト名　メッセージの出力元　メッセージ
+		デフォルトでは、ログファイルは週１で自動バックアップするが、最大４つまでしか保存できない
+			vim /etc/logrotate.conf		で設定できる
+		CentOS 7では、②のログファイルは journalctl コマンドで確認する
+			journalctl [-u サービス名]
+
+● ファイヤウォールの管理
+	・firewallにはゾーンという概念がある。
+		ゾーンは、パッケとフィルタリングのルールをまとめたもの
+		firewallのゾーン：
+			public			// インターネット上の公開サーバー用(デフォルト)
+			dmz				// DMZ
+			work			// 社内LANにあるクライアントPC用
+			home			// 家庭内LANにあるクライアントPC用
+			internal		// 内部ネットワークのインターフェース設定用
+			external		// 外部ネットワークのインターフェース設定用
+			block			// 受信パケットを全て拒否
+			drop			// 受信パケットを全て破棄
+			trusted			// 全ての通信を許可
+	・firewall-cmdコマンド
+		firewall-cmd オプション [--zone=ゾーン名]
+		このコマンドは、デフォルトではpublicゾーンを対象にしている
+			デフォルトで定義されているゾーン一覧を表示
+				firewall-cmd --get-zones
+			publicゾーンで許可されているサービスを確認
+				firewall-cmd --list-services
+			SSL/TLSによる安全なHTTP接続(HTTPS)も許可しよう
+				firewall-cmd --add-service=https
+				削除は --remove-service=
+	・サービスの定義ファイル
+		/usr/lib/firewall/services/		にある
+		これらのファイルを変更するな
+		定義を変更/追加したいとき、定義ファイルを /etc/firewall/services/ 下に配置
+		a_事前準備.txtにもやった
+		設定を変更したら		firewall-cmd --reload
+
+● SSH
+	SSH = Secure SHell
+	接続時に、ホスト認証とユーザー認証を行う
+	・ssh [オプション] [ユーザー名@]ホスト名/IPアドレス
+		ssh -p 10101 root@1.2.3.4		// 10101番ポートで接続
+		毎回ポート番号を指定したくない場合、$HOME/configファイルを作成して、Port 10101と書き込む
+		所有者のみが読み書きできるように、アクセス権を変更
+			chmod 600 .ssh/config
+	・scp [オプション] コピー元　コピー先
+		-P ポート		// ポート番号を指定
+		-p			// パーミッションを保つままコピーする
+		-r			// ディレクトリをコピーする
+			コピー元/コピー先の書式
+				[ユーザー名@]ホスト名/IPアドレス:ファイルパス
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
