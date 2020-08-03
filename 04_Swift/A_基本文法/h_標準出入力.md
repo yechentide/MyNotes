@@ -1,0 +1,20 @@
+# 標準出入力
+
+## 標準出力
+
+### コンソールに出力
+
+```swift
+print()
+```
+
+## 標準入力
+
+### Command Line Tool
+
+Playgroundでは使えないので、Command Line Toolプロジェクトを作ってそこで使う
+
+```swift
+var str = readLine()!
+print(str)
+```
