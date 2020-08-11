@@ -25,6 +25,14 @@ let dictionary = ["a":1, "b":2]
 for (key, value) in dictionary { /*...*/ }
 ```
 
+配列のindexとvalueを一緒に取り出す場合、`配列.enumerated()`を使うと良い
+
+```swift
+for (i, num) in list.enumerated() {
+    print("i = \(i), num = \(num)")
+}
+```
+
 #### 飛び飛びで繰り返す：　stride()関数
 
 ```swift
@@ -247,6 +255,6 @@ do {
         }
     }
     ```
-  
+
 * 上と同じように、if文やswitch文やdo文にもラベルをつけられる。
     これらの場合、breakのみ使える

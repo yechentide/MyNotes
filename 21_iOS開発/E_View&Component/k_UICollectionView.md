@@ -1,6 +1,38 @@
 # UICollectionView
 
-## コードで生成
+## UICollectionViewクラス
+
+[UICollectionView](https://developer.apple.com/documentation/uikit/UICollectionView)
+
+### 継承関係
+
+```swift
+class UICollectionView : UIScrollView       // : UIView : UIResponder : NSObject
+```
+
+### コンストラクタ
+
+```swift
+init()
+init(frame: CGRect, collectionViewLayout: UICollectionViewLayout)
+init?(coder: NSCoder)
+```
+
+### UICollectionViewDataSource
+
+[UICollectionViewDataSource](https://developer.apple.com/documentation/uikit/uicollectionviewdatasource)
+
+### UICollectionViewDelegate
+
+[UICollectionViewDelegate](https://developer.apple.com/documentation/uikit/uicollectionviewdelegate)
+
+## UICollectionViewの使い方
+
+### 基本
+
+[UICollectionView再入門](https://qiita.com/takehilo/items/f7130693f5943c126f7e)
+
+### コードで生成
 
 ```swift
 import UIKit
@@ -65,7 +97,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 }
 ```
 
-## Cellをカスタマイズ
+### Cellをカスタマイズ
 
 CustomUICollectionViewCell.swift
 
@@ -153,7 +185,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 }
 ```
 
-## セクション分け
+### セクション分け
 
 CustomUICollectionViewCell.swift
 

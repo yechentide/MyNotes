@@ -1,6 +1,28 @@
 # UIScrollView
 
-## ２つのUIScrollViewの連動
+## UIScrollViewクラス
+
+[UIScrollView](https://developer.apple.com/documentation/uikit/UIScrollView)
+
+### 継承関係
+
+```swift
+class UIScrollView : UIView     // : UIResponder : NSObject
+```
+
+### コンストラクタ
+
+```swift
+init()
+```
+
+### UIScrollViewDelegate
+
+[UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate)
+
+## 使用例
+
+### ２つのUIScrollViewの連動
 
 ```swift
 import UIKit

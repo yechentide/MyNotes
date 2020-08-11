@@ -1,4 +1,22 @@
-# ビュー＆画像
+# UIView
+
+## UIViewクラス
+
+[UIView](https://developer.apple.com/documentation/uikit/UIView)
+
+### 継承関係
+
+```swift
+class UIView : UIResponder      // : NSObject
+```
+
+### コンストラクタ
+
+```swift
+init()
+init(frame: CGRect)
+init?(coder: NSCoder)
+```
 
 ## アプリ起動時に最初に表示する画面
 

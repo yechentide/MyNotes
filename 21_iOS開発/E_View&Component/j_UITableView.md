@@ -1,6 +1,34 @@
-# UITableViewの使い方
+# UITableView
 
-## 基本
+## UITableViewクラス
+
+[UITableView](https://developer.apple.com/documentation/uikit/UITableView)
+
+### 継承関係
+
+```swift
+class UITableView : UIScrollView        // : UIView : UIResponder : NSObject
+```
+
+### コンストラクタ
+
+```swift
+init()
+init(frame: CGRect, style: UITableView.Style)
+init?(coder: NSCoder)
+```
+
+### UITableViewDataSource
+
+[UITableViewDataSource](https://developer.apple.com/documentation/uikit/uitableviewdatasource)
+
+### UITableViewDelegate
+
+[UITableViewDelegate](https://developer.apple.com/documentation/uikit/uitableviewdelegate)
+
+## UITableViewの使い方
+
+### 基本
 
 [デフォルトTableViewサンプル集](https://qiita.com/am10/items/9bbbe794e88a96e5420e)
 [コードのみでUITableViewを設置する](https://first-code.hatenablog.com/entry/2019/09/22/095301)
@@ -51,7 +79,7 @@ extension MainVC: UITableViewDataSource {
 }
 ```
 
-## 編集モード
+### 編集モード
 
 [UITableViewの編集モードを使ってCellの削除を実装するまで](https://qiita.com/nasutaro211/items/50d1dbc89969d873b7da)
 [TableViewで複数セルを一気に複数削除する](https://qiita.com/vivayashi/items/9cf122ad625867db0ec9)
@@ -159,7 +187,7 @@ extension MainVC: UITableViewDelegate {
 }
 ```
 
-## 並べ替え
+### 並べ替え
 
 [UITableView の編集モード](https://swift-ios.keicode.com/ios/uitableview-editing.php)
 
@@ -173,7 +201,7 @@ extension MainVC: UITableViewDataSource {
 }
 ```
 
-## スワイプして削除
+### スワイプして削除
 
 [【Swift5】UITableViewの編集モード、スワイプアクションについてまとめてみた](https://swallow-incubate.com/archives/blog/20200309)
 [UITableViewのセルの編集制御を極める](https://blog.mothule.com/ios/uitableview/ios-uitableview-uitableviewcell-edit-mode)
@@ -197,7 +225,7 @@ extension MainVC: UITableViewDataSource {
 // 調べる予定
 ```
 
-## DataSource分離
+### DataSource分離
 
 ```swift
 import UIKit
@@ -339,7 +367,7 @@ class MyTableDatasource: UITableView, UITableViewDataSource {
 class MyTableDelegate: UITableView, UITableViewDelegate {   }
 ```
 
-## ボタン拡張
+### ボタン拡張
 
 ```swift
 import UIKit
