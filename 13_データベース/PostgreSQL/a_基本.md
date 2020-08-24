@@ -129,7 +129,6 @@ tokyoweather(> daylight_hours REAL NOT NULL,
 tokyoweather(> avg_humidity INTEGER NOT NULL,
 tokyoweather(> PRIMARY KEY(date)
 tokyoweather(> );
-
 ```
 
 ### テーブル削除
