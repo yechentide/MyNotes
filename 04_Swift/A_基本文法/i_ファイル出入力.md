@@ -43,7 +43,7 @@ func removeObject(forKey: String)
 * `NSHomeDirectory()`：それぞれのアプリが利用できるホームディレクトリを取得
 
     ```swift
-    NSHomeDirectory()+"/Document/test.txt"
+    NSHomeDirectory()+"/Documents/test.txt"
     ```
 
 ### ファイルの保存場所
@@ -95,7 +95,7 @@ let fileManager = FileManager.default
 guard ( fileManager.fileExists(atPath:"パス")==true ) else {
     return
 }
-if fileManager.fileExists(atPath:path)==true {
+if fileManager.fileExists(atPath:"パス")==true {
     print("存在する")
 }
 ```
