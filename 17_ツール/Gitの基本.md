@@ -30,6 +30,12 @@ git init
 git clone https://.......
 ```
 
+### 既存のリポジトリをリモートに追加
+
+```shell
+git remote add origin <リポジトリのURI>
+```
+
 ### 状態を確認
 
 ```shell
@@ -124,6 +130,7 @@ git commit -m "メッセージ"
 ### 
 
 ```shell
+git push -u origin <ブランチ名>
 git push -u origin master
 ```
 
@@ -206,6 +213,22 @@ git checkout -b <ブランチ名>
 ```shell
 git merge <マージするブランチ名>
 ```
+
+### ブランチ名変更
+
+```shell
+git branch -m <元の名前> <新しい名前>
+```
+
+## 参考記事
+
+[【Git】基本コマンド](https://qiita.com/konweb/items/621722f67fdd8f86a017)
+
+[Gitの基本的な使い方メモ](https://qiita.com/opengl-8080/items/451c5967cbbc262f4f0d)
+
+[GitHubの使い方と実践](https://qiita.com/nnahito/items/565f8755e70c51532459)
+
+[いまさらだけどGitを基本から分かりやすくまとめてみた](https://qiita.com/gold-kou/items/7f6a3b46e2781b0dd4a0)
 
 ## Gitコマンドのオプション
 
