@@ -16,7 +16,7 @@ git config --global credential helper osxkeychain
 git config --global core.quotepath fasle
 ```
 
-## 使い方
+## 基本コマンド
 
 ### リポジトリの作成
 
@@ -36,18 +36,6 @@ git clone https://.......
 git status
 ```
 
-### ファイルを登録する
-
-```shell
-git add ファイル
-```
-
-### ファイルの変更を保存(コミット)
-
-```shell
-git commit -m "メッセージ"
-```
-
 ### ファイルの削除
 
 ```shell
@@ -64,6 +52,159 @@ git mv 元のファイル 移動先/新しい名前
 
 ```shell
 git log
+git log -n <表示件数上限>
+git log --oneline
+git log --grep="<検索パターン>"
+git log <ファイルパス>
+git log --graph
+```
+
+### gitコマンド実行履歴
+
+```shell
+git reflog
+```
+
+### 変更内容の確認
+
+```shell
+git diff
+git diff <ファイル>
+```
+
+## 戻す系
+
+### 特定のコミットに戻す
+
+```shell
+git checkout <コミットハッシュ>
+```
+
+### 特定のファイルを特定のコミットに戻す
+
+```shell
+git checkout <コミットハッシュ> <ファイル>
+```
+
+### リポジトリを最新のコミットに戻す
+
+```shell
+git checkout <ブランチ名>
+```
+
+### 過去のコミットを打ち消す(削除ではなくプラマイゼロ)
+
+```shell
+git revert <コミットハッシュ>
+```
+
+## プッシュ
+
+### ファイルを登録する
+
+```shell
+git add ファイル
+```
+
+### 登録したファイルをリセット
+
+```shell
+git reset
+git reset ファイル
+```
+
+### ファイルの変更を保存(コミット)
+
+```shell
+git commit -m "メッセージ"
+```
+
+### 変更をリモートに反映
+
+### 
+
+```shell
+git push -u origin master
+```
+
+## タグ関係
+
+[Gitのtagを理解する](https://qiita.com/k-penguin-sato/items/c62b47dd79f144c68dad)
+
+### ローカルタグ一覧
+
+```shell
+git tag
+```
+
+### タグをつける
+
+```shell
+git tag <tag-name>
+git tag -a <tag-name> -m "message"
+```
+
+### リモートに反映
+
+```shell
+git push origin <tag-name>
+git push origin --tags
+```
+
+### ローカルタグを削除
+
+```shell
+git tag -d <tag-name>
+```
+
+### リモートタグを削除
+
+```shell
+git push origin --delete <tag-name>
+```
+
+### タグの詳細情報
+
+```shell
+git show <タグ名>
+```
+
+## ブランチ
+
+### ブランチを作成
+
+```shell
+git branch <ブランチ名>
+```
+
+### ブランチのリスト
+
+```shell
+git branch
+```
+
+### ブランチを削除
+
+```shell
+git branch -d <ブランチ名>
+```
+
+### ブランチを切り替える
+
+```shell
+git checkout <ブランチ名>
+```
+
+### ブランチを新規作成＆切り替え
+
+```shell
+git checkout -b <ブランチ名>
+```
+
+### 現在のブランチと指定したブランチをマージ
+
+```shell
+git merge <マージするブランチ名>
 ```
 
 ## Gitコマンドのオプション
