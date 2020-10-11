@@ -129,3 +129,55 @@ let raw4 = ##" \Color="#\##(rgb)" "##
     (11.2 + 22.3).description
     "\(123.321)"
     ```
+
+## 便利な拡張機能
+
+```swift
+/// String extension for convenient of substring
+extension String {
+    
+    /// Index with using position of Int type
+    func index(at position: Int) -> String.Index {
+        return index((position.signum() >= 0 ? startIndex : endIndex), offsetBy: position)
+    }
+    
+    /// Subscript for using like a "string[i]"
+    subscript (position: Int) -> String {
+        let i = index(at: position)
+        return String(self[i])
+    }
+
+    /// Subscript for using like a "string[start..<end]"
+    subscript (bounds: CountableRange<Int>) -> String {
+        let start = index(at: bounds.lowerBound)
+        let end = index(at: bounds.upperBound)
+        return String(self[start..<end])
+    }
+
+    /// Subscript for using like a "string[start...end]"
+    subscript (bounds: CountableClosedRange<Int>) -> String {
+        let start = index(at: bounds.lowerBound)
+        let end = index(at: bounds.upperBound)
+        return String(self[start...end])
+    }
+    
+    /// Subscript for using like a "string[..<end]"
+    subscript (bounds: PartialRangeUpTo<Int>) -> String {
+        let i = index(at: bounds.upperBound)
+        return String(prefix(upTo: i))
+    }
+
+    /// Subscript for using like a "string[...end]"
+    subscript (bounds: PartialRangeThrough<Int>) -> String {
+        let i = index(at: bounds.upperBound)
+        return String(prefix(through: i))
+    }
+
+    /// Subscript for using like a "string[start...]"
+    subscript (bounds: PartialRangeFrom<Int>) -> String {
+        let i = index(at: bounds.lowerBound)
+        return String(suffix(from: i))
+    }
+}
+```
+
