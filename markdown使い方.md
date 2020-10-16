@@ -191,14 +191,24 @@ URLを**貼り付けるだけ**でオッケー！
 
 `$`でLaTexを囲む。複数行の場合は`$$`を使う
 
+[typora 数式個人的なまとめ](https://qiita.com/RyosukeKamimura/items/9178a9cbd72196236eaf)
+
 ```markdown
 $ \ce{CH4 + 2 $\left( \ce{O2 + 79/21 N2} \right)$} $
 $ \textcolor{red}{文字色を赤色にする方法} $
+$$
+a = \frac{1}{b}
+\tag{1}
+$$
 ```
 
 $ \ce{CH4 + 2 $\left( \ce{O2 + 79/21 N2} \right)$} $
 
 $ \textcolor{red}{文字色を赤色にする方法} $
+$$
+a = \frac{1}{b}
+\tag{1}
+$$
 
 ## その他
 
