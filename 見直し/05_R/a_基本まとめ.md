@@ -111,3 +111,12 @@ summary(result)					# 結果の詳細表示
 
 
 
+### 未分類
+
+```R
+str()
+as.Date()
+as.numeric()
+diff()
+```
+
