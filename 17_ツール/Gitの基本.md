@@ -127,8 +127,6 @@ git commit -m "メッセージ"
 
 ### 変更をリモートに反映
 
-### 
-
 ```shell
 git push -u origin <ブランチ名>
 git push -u origin master
