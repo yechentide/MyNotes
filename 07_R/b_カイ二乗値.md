@@ -4,13 +4,13 @@
 
 ### カイ二乗値
 
-![image-20201011083003194](/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image01.png)
+<img src="/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image01.png" alt="image-20201011083003194" style="zoom:50%;" />
 
-![image-20201011083028509](/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image02.png)
+<img src="/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image02.png" alt="image-20201011083028509" style="zoom:50%;" />
 
-![image-20201011083047388](/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image03.png)
+<img src="/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image03.png" alt="image-20201011083047388" style="zoom:50%;" />
 
-![image-20201011083109288](/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image04.png)
+<img src="/Users/yechentide/Documents/My Notes/07_R/b_カイ二乗値.assets/image04.png" alt="image-20201011083109288" style="zoom:50%;" />
 
 ### 結論
 

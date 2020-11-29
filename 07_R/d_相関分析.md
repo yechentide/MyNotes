@@ -24,7 +24,7 @@ cor(df[, 2:6])
 
 ![image-20201129172210058](/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image03.png)
 
-![image-20201129172227414](/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image04.png)
+<img src="/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image04.png" alt="image-20201129172227414" style="zoom:50%;" />
 
 ```R
 x<-c(1,2, 4, 5)

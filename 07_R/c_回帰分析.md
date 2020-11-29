@@ -2,7 +2,7 @@
 
 ## 最小二乗法
 
-![スクリーンショット 2020-11-29 16.30.06](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image01.png)
+![スクリーンショット 2020-11-29 16.30.18](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image01.png)
 
 ### 切片なしのモデル
 
