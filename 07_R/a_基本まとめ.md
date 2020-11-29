@@ -28,6 +28,9 @@ F[c(1, 3, 5), 1:2]
 F$x					# x列をベクトルとして抽出
 F[, "x"]			# x列をベクトルとして抽出
 F[, c("x", "z")]	# x列とz列をベクトルとして抽出
+
+F[x==3,]	# xが3の行を抽出
+F[x<=3,]	# xが3以下の行を抽出
 ```
 
 ### よく使う基本的な関数
@@ -64,6 +67,9 @@ length(vec)					# ベクトルの⻑さ(要素数)
 seq(0, 10)					# 初項0, 末項10, 等差1(0:10と同じ)
 seq(0, 10, 2)				# 初項0, 末項10, 等差2
 seq(0, 10, length = 100)	# 初項0, 末項10, ⻑さ100(引数指定)
+
+vec1 + vec2					# 対応要素の足し算
+c(vec1, vec2, vec3)			# ベクトルの結合
 ```
 
 ### 二次元データ
@@ -99,24 +105,16 @@ plot(df[, 2:6])					# 3列以上だと総当たりで作図する(多変量連�
 abline(v = mean(df$ht))
 ```
 
-### 回帰分析
-
-```R
-result <- lm(df$grmax ~ df$ht)	# 回帰分析
-result$coefficients				# 回帰係数の抽出
-abline(a = result$coefficients[1], b = result$coefficients[2])
-abline(result, col = "red")		# lmの結果を入れても描画できる
-summary(result)					# 結果の詳細表示
-```
-
 
 
 ### 未分類
 
 ```R
+class()
 str()
 as.Date()
 as.numeric()
 diff()
+round()			# 四捨五入
 ```
 
