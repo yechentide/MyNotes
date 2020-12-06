@@ -35,8 +35,6 @@ echo $?		# 0 (true)
 f="apple"; if [[ $f == [aA]pple ]]; then echo "match"; else echo "unmatch"; fi
 ```
 
-### 
-
 ### `[`と`[[`の違い
 
 [参考サイト](https://fumiyas.github.io/2013/12/15/test.sh-advent-calendar.html)
