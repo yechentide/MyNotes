@@ -41,8 +41,9 @@ struct GapBuffer {
                 self.insert(index: index+i, str: String(c))
             }
         } else {
+            let targetPos = (index > gapStart) ? (index + gapSize) : index
             expandGap()
-            moveGapToPoint(point: index)
+            moveGapToPoint(point: targetPos)
             buffer[gapStart] = UInt8(str.unicodeScalars.first!.value)
             gapStart += 1
             gapSize -= 1
@@ -61,18 +62,20 @@ struct GapBuffer {
             return
         }
         
-        if (index+1)==gapStart {
-            gapStart = index
+        let targetPos = (index >= gapStart) ? (index + gapSize) : index
+        
+        if (targetPos+1)==gapStart {
+            gapStart = targetPos
             gapSize += 1
-        } else if index==gapStart {
+        } else if targetPos==(gapStart+gapSize) {
             gapSize += 1
         } else {
-            if index < gapStart {
-                moveGapToPoint(point: index+1)
-                gapStart = index
+            if targetPos < gapStart {
+                moveGapToPoint(point: targetPos+1)
+                gapStart = targetPos
                 gapSize += 1
             } else {
-                moveGapToPoint(point: index)
+                moveGapToPoint(point: targetPos-gapSize)
                 gapSize += 1
             }
         }
@@ -110,17 +113,18 @@ struct GapBuffer {
             for i in 0..<(gapStart-point) {
                 buffer[gapStart+gapSize-1-i] = buffer[gapStart-1-i]
             }
+            gapStart = point
         } else if gapStart < point {
             // point=10, gapStart=0, gapSize=3
             // ...abcdefg
             // a...bcdefg
             // ab...cdefg
             // abcdefg...
-            for i in 0..<(point-gapStart) {
+            for i in 0..<(point-gapStart-gapSize) {
                 buffer[gapStart+i] = buffer[gapStart+gapSize+i]
             }
+            gapStart += point-gapStart-gapSize
         }
-        gapStart = point
     }
     
     
