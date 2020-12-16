@@ -39,13 +39,8 @@ func (gb *GapBuffer) insertAt(index int, char byte) {
 		return
 	}
 
-	targetPos := index
-	if index > gb.gapStart {
-		targetPos = index + gb.gapSize
-	}
-
 	gb.expandGap()
-	gb.moveGapToPoint(targetPos)
+	gb.moveGapToPoint(index)
 	gb.buffer[gb.gapStart] = char
 	gb.gapStart++
 	gb.gapSize--
@@ -78,23 +73,18 @@ func (gb *GapBuffer) remove(index int) {
 		return
 	}
 
-	targetPos := index
-	if index >= gb.gapStart {
-		targetPos = index + gb.gapSize
-	}
-
-	if (targetPos+1)==gb.gapStart {
-		gb.gapStart = targetPos
+	if (index+1)==gb.gapStart {
+		gb.gapStart = index
 		gb.gapSize += 1
-	} else if targetPos==(gb.gapStart+gb.gapSize) {
+	} else if index==gb.gapStart {
 		gb.gapSize += 1
 	} else {
-		if targetPos < gb.gapStart {
-			gb.moveGapToPoint(targetPos+1)
-			gb.gapStart = targetPos
+		if index < gb.gapStart {
+			gb.moveGapToPoint(index+1)
+			gb.gapStart = index
 			gb.gapSize += 1
 		} else {
-			gb.moveGapToPoint(targetPos-gb.gapSize)
+			gb.moveGapToPoint(index)
 			gb.gapSize += 1
 		}
 	}
@@ -124,7 +114,6 @@ func (gb *GapBuffer) moveGapToPoint(point int) {
 		for i:=0; i<(gb.gapStart-point); i++ {
 			gb.buffer[gb.gapStart+gb.gapSize-1-i] = gb.buffer[gb.gapStart-1-i]
 		}
-		gb.gapStart = point
 	} else if gb.gapStart < point {
 		// 复制顺序：从前往后
 		// point=10, gapStart=0, gapSize=3
@@ -132,11 +121,11 @@ func (gb *GapBuffer) moveGapToPoint(point int) {
 		// a...bcdefg
 		// ab...cdefg
 		// abcdefg...
-		for i:=0; i<(point-gb.gapStart-gb.gapSize); i++ {
+		for i:=0; i<(point-gb.gapStart); i++ {
 			gb.buffer[gb.gapStart+i] = gb.buffer[gb.gapStart+gb.gapSize+i]
 		}
-		gb.gapStart += point-gb.gapStart-gb.gapSize
 	}
+	gb.gapStart = point
 }
 
 
