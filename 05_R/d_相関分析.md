@@ -8,11 +8,11 @@
 
 ### 共分散、分散、標準偏差
 
-![image-20201129171816165](/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image01.png)
+![image-20201129171816165](./d_相関分析.assets/image01.png)
 
 ### 相関係数
 
-![image-20201129171911603](/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image02.png)
+![image-20201129171911603](./d_相関分析.assets/image02.png)
 
 ```R
 df <- read.csv("physical.csv")
@@ -22,9 +22,9 @@ cor(df[, 2:6])
 
 ### 決定係数
 
-![image-20201129172210058](/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image03.png)
+![image-20201129172210058](./d_相関分析.assets/image03.png)
 
-<img src="/Users/yechentide/Documents/My Notes/07_R/d_相関分析.assets/image04.png" alt="image-20201129172227414" style="zoom:50%;" />
+<img src="/Users/yechentide/Documents/My Notes/05_R/d_相関分析.assets/image04.png" alt="image-20201129172227414" style="zoom:50%;" />
 
 ```R
 x<-c(1,2, 4, 5)

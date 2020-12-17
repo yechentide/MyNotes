@@ -2,7 +2,7 @@
 
 ## 標準化
 
-![image-20201129180139021](/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image01.png)
+![image-20201129180139021](./e_主成分分析.assets/image01.png)
 
 ## 主成分分析
 
@@ -10,13 +10,13 @@
 
 ### 
 
-![image-20201129180531573](/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image02.png)
+![image-20201129180531573](./e_主成分分析.assets/image02.png)
 
 ### やり方
 
-![image-20201129180627954](/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image03.png)
+![image-20201129180627954](./e_主成分分析.assets/image03.png)
 
-![image-20201129180627954](/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image04.png)
+![image-20201129180627954](./e_主成分分析.assets/image04.png)
 
 ### Rでのやり方①
 
@@ -43,7 +43,7 @@ print(round(var(scores), 6))
 print(round(cor(scores), 6))
 ```
 
-<img src="/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image05.png" alt="image-20201129181156794" style="zoom:50%;" />
+<img src="./e_主成分分析.assets/image05.png" alt="image-20201129181156794" style="zoom:50%;" />
 
 ### Rでのやり方②
 
@@ -66,4 +66,4 @@ colnames(scores) <- paste("PC", 1:ncol(z), sep = "")
 plot(scores[, c(1, 2)], xlim = c(-5, 5), ylim = c(-5, 5))
 ```
 
-<img src="/Users/yechentide/Documents/My Notes/07_R/e_主成分分析.assets/image06.png" alt="image-20201129181423721" style="zoom:50%;" />
+<img src="./e_主成分分析.assets/image06.png" alt="image-20201129181423721" style="zoom:50%;" />

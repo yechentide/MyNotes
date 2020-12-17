@@ -12,4 +12,4 @@
 
 1109
 
-![image-20201129182020078](/Users/yechentide/Documents/My Notes/07_R/f_対応分析法.assets/image-20201129182020078.png)
+![image-20201129182020078](./f_対応分析法.assets/image-20201129182020078.png)

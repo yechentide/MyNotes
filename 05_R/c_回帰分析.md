@@ -2,11 +2,11 @@
 
 ## 最小二乗法
 
-![スクリーンショット 2020-11-29 16.30.18](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image01.png)
+![スクリーンショット 2020-11-29 16.30.18](./c_回帰分析.assets/image01.png)
 
 ### 切片なしのモデル
 
-![スクリーンショット 2020-11-29 16.30.18](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image02.png)
+![スクリーンショット 2020-11-29 16.30.18](./c_回帰分析.assets/image02.png)
 
 ```R
 x<-c(1,2, 4, 5)
@@ -31,9 +31,9 @@ cat("S =", sum(d^2))	# 残差平方和
 
 ### 切片ありのモデル(単回帰モデル)
 
-![image-20201129163658905](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image03.png)
+![image-20201129163658905](./c_回帰分析.assets/image03.png)
 
-![image-20201129163858589](/Users/yechentide/Documents/My Notes/07_R/c_回帰分析.assets/image04.png)
+![image-20201129163858589](./c_回帰分析.assets/image04.png)
 
 ```R
 x<-c(1,2, 4, 5)
