@@ -1,58 +1,436 @@
 # 振る舞いに関するパターン
 
-## Chain of Responsibility
+## Chain of Responsibility - 責任のたらい回し
+
+### Wikiの説明
 
 イベントの送受信を行う複数のオブジェクトを鎖状につなぎ、それらの間をイベントが渡されてゆくようにする。
 
-## Command
+### Chain of Responsibilityパターン
 
-複数の異なる操作について、それぞれに対応するオブジェクトを用意し、オブジェクトを切り替えることで、操作の切替えを実現する。
+ある要求が発生したときに、その要求を処理するオブジェクトをダイレクトに決められない場合、
 
-## Interpreter
+複数のオブジェクトをチェーンのように繋いでおき、そのオブジェクトの鎖を順次渡り歩いて、目的のオブジェクトを決定する方法が考えられる。
 
-構文解析のために、文法規則を反映するクラス構造を作る。
+このパターンを使うと「要求する側」と「処理する側」の結びつきを弱めることができ、それぞれを部品として独立させることができる。
 
-## Iterator - 1つ1つ数え上げる
+また、状況によって要求を処理するオブジェクトが変化するようなプログラムにも対応することができる。
 
-### Iteratorパターン
+### 実装例
 
-複数の要素を持つオブジェクトのすべての要素に対して、順番にアクセスするためのものである。 iterator は*反復子*と呼ばれる。
+```java
+public abstract class Support {
+    private Support next;
+    public Support setNext(Support next) {
+        this.next = next;
+        return next;
+    }
+    public void support(Trouble trouble) {  // トラブル解決の手順
+        if (resolve(trouble)) {
+            done(trouble);
+        } else if (next != null) {
+            next.support(trouble);
+        } else {
+            fail(trouble);
+        }
+    }
+    protected abstract boolean resolve(Trouble trouble); // 解決用メソッド
+}
+
+public class NoSupport extends Support {}
+public class LimitSupport extends Support {}
+public class OddSupport extends Support {}
+public class SpecialSupport extends Support {}
+
+public class Main {
+    public static void main(String[] args) {
+        Support alice   = new NoSupport("Alice");
+        Support bob     = new LimitSupport("Bob", 100);
+        Support charlie = new SpecialSupport("Charlie", 429);
+        Support diana   = new LimitSupport("Diana", 200);
+        Support elmo    = new OddSupport("Elmo");
+        Support fred    = new LimitSupport("Fred", 300);
+        // 連鎖の形成
+        alice.setNext(bob).setNext(charlie).setNext(diana).setNext(elmo).setNext(fred);
+        // さまざまなトラブル発生
+        for (int i = 0; i < 500; i += 33) {
+            alice.support(new Trouble(i));
+        }
+    }
+}
+```
 
 ### メリット
 
-コンテナオブジェクトの要素を列挙する手段を独立させることによって、コンテナの内部仕様に依存しない反復子を提供できる。
+* リクエストを連鎖の中に流せば、適切な処理者によって処理される
+* 動的に連鎖を変えることができる（GUIにおいて有効に働ける）
+* 個々の処理系は、自分の仕事に集中できる
 
-Iterator を使うことで、 実装とは切り離して、 数え上げを行うことができ、再利用化を促進できる。
+### デメリット
 
-### Iteratorのメソッド
+* ダイレクトに処理系を指定するよりは速度が遅い（トレードオフの問題）
 
-`hasNext()`と`next()`の２種類のメソッドを用意するのが一般的である
+## Command - 命令をクラスにする
 
-### 色々なIterator
+### Wikiの説明
+
+複数の異なる操作について、それぞれに対応するオブジェクトを用意し、オブジェクトを切り替えることで、操作の切替えを実現する。
+
+### Commandパターン
+
+Commandパターンは、命令を表すクラスのインスタンスを、1つのものとして表現する方式である。
+
+命令の履歴を管理したいときは、そのインスタンスの集まりを管理すればよい。
+
+命令の集まりを保存しておけば、同じ命令を実行したり、複数の命令をまとめて新しい命令として再利用したりできる。
+
+### 実装例
+
+```java
+public interface Command {
+    public abstract void execute();
+}
+
+public class MacroCommand implements Command {
+    // 命令の集合
+    private Stack<Command> commands = new Stack<Command>();
+    // 実行
+    public void execute() {
+        Iterator<Command> it = commands.iterator();
+        while (it.hasNext()) {
+            (it.next()).execute();
+        }
+    }
+}
+```
+
+### メリット
+
+* 命令の履歴をとったり、命令の再実行を行ったりすることが容易になる
+* 新しい命令を追加したい場合は、Commandインターフェースを実装したクラスを作れば良いので、機能拡張が行いやすくなる
+
+## Interpreter - 文法規則をクラスで表現する
+
+### Wikiの説明
+
+構文解析のために、文法規則を反映するクラス構造を作る。
+
+### Interpreterパターン
+
+Interpreterという英単語は、通訳という意味になる。
+
+Interpreterパターンは、何らかの形式で書かれた==ファイルの中身を、「通訳」の役目を果たすプログラムで解析・表現する==方式である。
+
+### 実装例
+
+```java
+public class Context {}		// 解析するテキスト
+
+public abstract class Node {
+    public abstract void parse(Context context) throws Exception;
+}
+public class ProgramNode extends Node {
+    private Node commandListNode;
+    public void parse(Context context) throws Exception {
+        context.skipToken("program");
+        commandListNode = new CommandListNode();
+        commandListNode.parse(context);
+    }
+}
+public class CommandNode extends Node {
+    private Node node;
+    public void parse(Context context) throws Exception {
+        if (context.currentToken().equals("repeat")) {
+            node = new RepeatCommandNode();
+            node.parse(context);
+        } else {
+            node = new PrimitiveCommandNode();
+            node.parse(context);
+        }
+    }
+}
+public class RepeatCommandNode extends Node {
+    private int number;
+    private Node commandListNode;
+    public void parse(Context context) throws Exception {
+        context.skipToken("repeat");
+        number = context.currentNumber();
+        context.nextToken();
+        commandListNode = new CommandListNode();
+        commandListNode.parse(context);
+    }
+}
+public class CommandListNode extends Node {
+    private ArrayList list = new ArrayList();
+    public void parse(Context context) throws Exception {
+        while (true) {
+            if (context.currentToken() == null) {
+                throw new Exception("Missing 'end'");
+            } else if (context.currentToken().equals("end")) {
+                context.skipToken("end");
+                break;
+            } else {
+                Node commandNode = new CommandNode();
+                commandNode.parse(context);
+                list.add(commandNode);
+            }
+        }
+    }
+}
+public class PrimitiveCommandNode extends Node {
+    private String name;
+    public void parse(Context context) throws Exception {
+        name = context.currentToken();
+        context.skipToken(name);
+        if (!name.equals("go") && !name.equals("right") && !name.equals("left")) {
+            throw new Exception(name + " is undefined");
+        }
+    }
+}
+```
+
+### メリット
+
+* 規則の追加や変更が容易になる
+* 1つの規則を1つのクラスで表す：新しい規則を追加する場合はNodeクラスのサブクラスを追加するだけで良い
+* 規則を修正する場合は、Nodeクラスのサブクラスを修正するだけで良い
+
+## Iterator - 1つ1つ数え上げる
+
+### Wikiの説明
+
+複数の要素を持つオブジェクトのすべての要素に対して、順番にアクセスするためのものである。 iterator は反復子と呼ばれる。
+
+### Iteratorパターン
+
+Iterator パターンとは、何かがたくさん集まっているときに、それを順番に指し示していき、全体をスキャンしていく処理を行うためのものである。
+
+### 実装例
+
+```java
+public interface Aggregate {
+    public abstract Iterator iterator(); // イテレータを生成して返す
+}
+public interface Iterator {
+    public abstract boolean hasNext(); // 次の要素があるか？ 
+    public abstract Object next(); // 次の要素を返す
+}
+```
 
 - 最後尾から開始して逆方向に進む
 - 順方向にも逆方向にも行く (next メソッドだけでなく previous メソッドも持つ)
 - 番号を指定して、いきなりそこにジャンプする
 
-## Mediator
+### メリット
+
+* コンテナの内部仕様に依存しない反復子を提供できる
+* Iterator を使うことで、 実装とは切り離して、 数え上げを行うことができ、再利用化を促進できる。
+
+## Mediator - 相手は相談役1人だけ
+
+### Wikiの説明
 
 オブジェクト間の相互作用を仲介するオブジェクトを定義し、オブジェクト間の結合度を低くする。
 
-## Memento
+### Mediatorパターン
+
+mediatorは「調停者」「仲介者」という意味である。「相談役」を想像するとよい。
+
+グループの各メンバが勝手に他のメンバとコミュニケートして判断するのではなく、いつも頼りになる相談役を通して行動を起こすようにする。
+
+一方、相談役はグループのメンバから上がってきた報告を元に大局的な判断を行い、各メンバに指示を出す。
+
+Mediatorパターンでは、「相談役」はmediator(調停者)、「各メンバ」はcolleague(同僚)と呼ばれる。
+
+### 実装例
+
+```java
+public interface Mediator {
+    public abstract void createColleagues();
+    public abstract void colleagueChanged();
+}
+public interface Colleague {
+    public abstract void setMediator(Mediator mediator);
+    public abstract void setColleagueEnabled(boolean enabled);
+}
+```
+
+### メリット
+
+* 処理を各クラスに分散せずに、集中して行える。
+
+### デメリット
+
+* 通信経路が増加し、プログラムが複雑になる。
+* 再利用しにくい時がある。
+
+## Memento - 状態を保存する
+
+### Wikiの説明
 
 データ構造に対する一連の操作のそれぞれを記録しておき、以前の状態の復帰または操作の再現が行えるようにする。
 
-## Observer
+### Mementoパターン
+
+アプリには「取り消し」のような機能がある。
+
+オブジェクト指向のプログラムでこういう機能を実装するには、インスタンスの持っている情報を保存しておく必要がある。
+
+ただし、保存しておくだけでは駄目で、保存しておいた情報からインスタンスを元の状態に戻せなければならない。
+
+インスタンスを復元するためには、インスタンス==内部の情報に自由にアクセスできる必要==がある。
+
+しかし、不用意にアクセスを許してしまうと、そのクラスの内部構造に依存したコードがプログラムのあちこちに散らばり、
+
+クラスの修正がしにくくなってしまう。これを==カプセル化の破壊==という。
+
+インスタンスの状態を表す役割を導入して、カプセル化の破壊におちいることなく保存と復元を行うのがMementoパターンである。
+
+mementoという語には、「記念品」「形見」「思い出の種」という意味がある。
+
+ある時点でのインスタンスの状態をパチリと記録して保存しておき、あとでインスタンスをその時点の状態に戻してやるのである。
+
+### メリット
+
+* undo(やり直し)、redo(再実行)、history(作業履歴の作成)、snapshot(現在状態の保存)、を行えるようになる
+
+## Observer - 状態の変化を通知する
+
+### Wikiの説明
 
 インスタンスの変化を他のインスタンスから監視できるようにする。Listenerとも呼ばれる。
 
-## State
+### Observerパターン
+
+Observerパターンでは、観察対象の状態が変化すると、観察者に対して通知される。
+
+Observerパターンは、状態変化に応じた処理を記述するときに有効である。
+
+### 実装例
+
+```java
+public interface Observer {
+    public abstract void update(NumberGenerator generator);
+}
+public abstract class NumberGenerator {
+    private ArrayList<Observer> observers = new ArrayList<Observer>();        // Observerたちを保持
+    public void addObserver(Observer observer) {}
+    public void deleteObserver(Observer observer) {}
+    public void notifyObservers() {               // Observerへ通知
+        Iterator<Observer> it = observers.iterator();
+        while (it.hasNext()) {
+            Observer o = it.next();
+            o.update(this);
+        }
+    }
+    public abstract int getNumber();                // 数を取得する
+    public abstract void execute();                 // 数を生成する
+}
+```
+
+### メリット
+
+* 抽象クラスやインターフェースを使って、具象クラスから抽象メソッドを引きはがす
+* 引数でインスタンスを渡すときや、フィールドでインスタンスを保持するときは、抽象クラスやインターフェースの型にしておく
+
+## State - 状態をクラスとして表現する
+
+### Wikiの説明
 
 オブジェクトの状態を変化させることで、処理内容を変えられるようにする。
 
-## Strategy
+### Stateパターン
+
+Stateパターンでは、「状態」というものをクラスとして表現する。
+
+Stateパターンを使わない場合は、各メソッドで、条件分岐を用いて各状態の処理を記述しなければならない。
+
+Stateパターンを使えば、それぞれの状態のクラスで、各処理を記述すればよい。
+
+==分割して統治せよ (divide and conquer) という方針==である
+
+### 実装例
+
+```java
+public interface State {
+    public abstract void doClock(Context context, int hour);    // 時刻設定
+    public abstract void doUse(Context context);                // 金庫使用
+    public abstract void doAlarm(Context context);              // 非常ベル
+    public abstract void doPhone(Context context);              // 通常通話
+}
+
+public class DayState implements State {
+    private static DayState singleton = new DayState();
+    private DayState() {}
+    public static State getInstance() {return singleton;}
+    
+    public void doClock(Context context, int hour) {}
+    public void doUse(Context context) {}
+    public void doAlarm(Context context) {}
+    public void doPhone(Context context) {}
+}
+
+public class NightState implements State {
+    // ......
+}
+```
+
+### メリット
+
+* 複雑なプログラムを理解しやすくできる
+
+## Strategy - アルゴリズムをごっそり切り替える
+
+### Wikiの説明
 
 データ構造に対して適用する一連のアルゴリズムをカプセル化し、アルゴリズムの切替えを容易にする。
+
+### Strategyパターン
+
+strategy は「戦略」という意味である。プログラミングの場合には、「アルゴリズム」と考えてもよい。
+
+普通にプログラミングしていると、メソッドの中に溶け込んだ形でアルゴリズムを実装してしまいがちである。
+
+しかし、Strategyパターンでは、アルゴリズムの部分を他の部分と意識的に分離する。
+
+そしてアルゴリズムとのインタフェース(API)の部分だけを規定する。
+
+そして、プログラムから委譲によってアルゴリズムを利用する。
+
+### 実装例
+
+```java
+public class Hand {
+    // じゃんけんの「手」を表すクラスである。
+    // 手の強さを比較するメソッドを持つ
+}
+public interface Strategy {
+    public abstract Hand nextHand();
+    public abstract void study(boolean win);
+}
+public class WinningStrategy implements Strategy {
+    private Random random;
+    private boolean won = false;
+    private Hand prevHand;
+    public WinningStrategy(int seed) {
+        random = new Random(seed);
+    }
+    public Hand nextHand() {
+        if (!won) {
+            prevHand = Hand.getHand(random.nextInt(3));
+        }
+        return prevHand;
+    }
+    public void study(boolean win) {
+        won = win;
+    }
+}
+```
+
+### メリット
+
+* アルゴリズムと他の部分を分離でき、改良を施しやすくなる。
+* 委譲というゆるやかな結びつきを使っているので、アルゴリズムを容易に切り替えることができる。
 
 ## Template Method - 具体的な処理をサブクラスにまかせる
 
@@ -98,6 +476,93 @@ Template Method パターンの目的は、ある処理のおおまかなアル�
 
 ### 
 
-## Visitor
+## Visitor - 構造を渡り歩きながら仕事をする
+
+### Wikiの説明
 
 データ構造を保持するクラスと、それに対して処理を行うクラスを分離する。
+
+### Visitorパターン
+
+visitor は「訪問者」という意味である。
+
+たくさんの要素を持つデータ構造内の要素をアクセスする時、普通に考えば、データ構造を表しているクラスの中に処理を書く。
+
+しかし、複数の種類の処理が必要な場合、クラスを修正しなければならない。
+
+Visitorパターンでは、データ構造と処理を分離する。
+
+そして、データ構造の中をめぐり歩く主体である「訪問者」を表すクラスを用意し、そのクラスに処理をまかせる。
+
+すると、新しい処理を追加したいときには新しい「訪問者」を作ればよいことになる。
+
+そして、データ構造の方は、 戸を叩いてくる「訪問者」を受け入れればよい。
+
+### 実装例
+
+```java
+// 「訪問者」を表すクラス
+public abstract class Visitor {
+    public abstract void visit(File file);
+    public abstract void visit(Directory directory);
+}
+// 訪問者を受け入れるインタフェース
+public interface Element {
+    public abstract void accept(Visitor v);
+}
+
+public abstract class Entry implements Element {
+    public abstract String getName();                                   // 名前を得る
+    public abstract int getSize();                                      // サイズを得る
+    public Entry add(Entry entry) throws FileTreatmentException {       // エントリを追加する
+        throw new FileTreatmentException();
+    }
+    public Iterator iterator() throws FileTreatmentException {    // Iteratorの生成
+        throw new FileTreatmentException();
+    }
+    public String toString() {                                          // 文字列表現
+        return getName() + " (" + getSize() + ")";
+    }
+}
+public class File extends Entry {
+    private String name;
+    private int size;
+    public File(String name, int size) { this.name = name; this.size = size; }
+    public String getName() {return name;}
+    public int getSize() {return size;}
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+}
+public class Directory extends Entry {
+    private String name;                    // ディレクトリの名前
+    private ArrayList<Entry> dir = new ArrayList<Entry>();      // ディレクトリエントリの集合
+    public Directory(String name) {this.name = name;}
+    public String getName() {return name;}
+    
+    public int getSize() {                  // サイズを得る
+        int size = 0;
+        Iterator<Entry> it = dir.iterator();
+        while (it.hasNext()) {
+            Entry entry = (Entry)it.next();
+            size += entry.getSize();
+        }
+        return size;
+    }
+    public Entry add(Entry entry) {         // エントリの追加
+        dir.add(entry);
+        return this;
+    }
+    public Iterator iterator() {      // Iteratorの生成
+        return dir.iterator();
+    }
+    public void accept(Visitor v) {         // 訪問者の受け入れ
+        v.visit(this);
+    }
+}
+```
+
+### メリット
+
+* データ構造と処理を分離できる
+* Visitorパターンは、受け入れ役(File、Directory)クラスの部品としての独立性を高めている
