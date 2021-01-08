@@ -172,8 +172,6 @@ protocol TransVector {
 
     右の条件を満たした場合に限って、プロトコルGはプロトコルPを継承する
 
-### 
-
 ```swift
 protocol EqVector: Equatable {		// 比較可能なEquatableを継承
     associatedtype Element			// 付属型に適合するプロトコルを指定
