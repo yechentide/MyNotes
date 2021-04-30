@@ -65,3 +65,66 @@ withUnsafeBytes(of: bitPattern.bigEndian) { Data($0) }
 
 * RandomAccessCollection
 * RangeReplaceableCollection
+
+## プログラムから画像生成
+
+### CGImage
+
+```swift
+func makeCGImage(color: CGColor) -> CGImage? {
+    let size = CGSize(width: 1, height: 1)
+    guard let cgContext = CGContext(
+        data: nil,
+        width: Int(size.width),
+        height: Int(size.height),
+        bitsPerComponent: 8,
+        bytesPerRow: 4 * Int(size.width),
+        space: CGColorSpaceCreateDeviceRGB(),
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+    ) else {
+        return nil
+    }
+    cgContext.setFillColor(color)
+    cgContext.fill(CGRect(origin: .zero, size: size))
+    // cgContext.stroke(CGRect(origin: .zero, size: size))
+    return cgContext.makeImage()
+}
+```
+
+### NSImage
+
+```swift
+let nsImage = NSImage(
+    cgImage: cgImage, 
+    size: NSSize(width: cgImage.width, height: cgImage.height)
+)
+```
+
+## 画像をローカルファイルとして保存
+
+### CGImage
+
+```swift
+@discardableResult func save(cgImage: CGImage, to path: URL) -> Bool {
+    guard let destination = CGImageDestinationCreateWithURL(path as CFURL, kUTTypePNG, 1, nil) else { return false }
+    CGImageDestinationAddImage(destination, cgImage, nil)
+    return CGImageDestinationFinalize(destination)
+}
+```
+
+### NSImage
+
+```swift
+@discardableResult func save(nsImage: NSImage, to path: URL) -> Bool {
+    let imageRep = NSBitmapImageRep(data: nsImage.tiffRepresentation!)
+    let pngData = imageRep?.representation(using: .png, properties: [:])
+    do {
+        try pngData?.write(to: path)
+        return true
+    } catch {
+        print(error)
+        return false
+    }
+}
+```
+
