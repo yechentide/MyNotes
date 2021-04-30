@@ -16,6 +16,28 @@ git config --global credential helper osxkeychain
 git config --global core.quotepath fasle
 ```
 
+## 使えそうなもの
+
+### コミットメッセージの変更
+
+```shell
+# 直前のコミットメッセージを変更
+git commit --amend							# 指定されたエディタで編集
+git commit --amend -m "正しいメッセージ"
+
+# もっと前のメッセージを変更
+git rebase -i HEAD~3						# 修正箇所の"pick"を"edit"に変えて保存
+git commit --amend
+git rebase --continue
+```
+
+### コミットの取り消し
+
+```shell
+git revert コミット
+git revert --abort
+```
+
 ## 基本コマンド
 
 ### リポジトリの作成
