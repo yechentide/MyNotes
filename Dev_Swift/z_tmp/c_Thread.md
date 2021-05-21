@@ -13,4 +13,3 @@ class MyThread: Thread {
 let thread = MyThread()
 thread.start()
 ```
-

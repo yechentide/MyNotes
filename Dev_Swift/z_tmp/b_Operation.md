@@ -25,12 +25,11 @@ queue.qualityOfService = .userInitiated
 
 var tasks = [MyTask]()
 for i in 0..<10 {
-	tasks.append(MyTask(number: i))
-	// tasks[i].addDependency(task[j])　を使うことで、task[j]が終わってからtask[i]が実行される
+    tasks.append(MyTask(number: i))
+    // tasks[i].addDependency(task[j])　を使うことで、task[j]が終わってからtask[i]が実行される
 }
 
 queue.addOperations(tasks, waitUntilFinished: false)
 print("タスクが追加された")
 tasks[6].cancel()       // タスクをキャンセル
 ```
-

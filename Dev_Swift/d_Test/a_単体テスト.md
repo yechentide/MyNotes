@@ -4,11 +4,11 @@
 
 - 公式(Xcode標準)：`XCTest Framework`
 - サードパティ：
-    1. `Quick/Nimble`：BDDフレームワーク
-    2. `OCMock`
-    3. `Mockingjay`：HTTP通信のモック
-    4. `Cuckoo`：モック用のコードの自動生成
-    5. `SwiftCheck`：Property-based Testing
+  1. `Quick/Nimble`：BDDフレームワーク
+  2. `OCMock`
+  3. `Mockingjay`：HTTP通信のモック
+  4. `Cuckoo`：モック用のコードの自動生成
+  5. `SwiftCheck`：Property-based Testing
 
 ## XCTest Framework
 
@@ -63,28 +63,28 @@ func testExample() {
 なお、期待値と実際値のどれを最初の引数にするかは、決まっていないらしい
 
 1. Boolの判定：
-    - `XCTAssertTrue(expr)`：exprがtrueであることを期待
-    - `XCTAssertFalse(expr)`：exprがfalseであることを期待
-    - `XCTAssert(expr)`：XCTAssertTrue(expr)と同じ
+   - `XCTAssertTrue(expr)`：exprがtrueであることを期待
+   - `XCTAssertFalse(expr)`：exprがfalseであることを期待
+   - `XCTAssert(expr)`：XCTAssertTrue(expr)と同じ
 2. nilの判定：
-    - `XCTAssertNil(expr)`：exprがnilであることを期待
-    - `XCTAssertNotNil(expr)`：exprがnilでないことを期待
+   - `XCTAssertNil(expr)`：exprがnilであることを期待
+   - `XCTAssertNotNil(expr)`：exprがnilでないことを期待
 3. 等値性の判定：
-    - `XCTAssertEqual(expr1,expr2)`：expr1とexpr2が一致することを期待
-    - `XCTAssertNotEqual(expr1,expr2)`：expr1とexpr2が一致しないことを期待
+   - `XCTAssertEqual(expr1,expr2)`：expr1とexpr2が一致することを期待
+   - `XCTAssertNotEqual(expr1,expr2)`：expr1とexpr2が一致しないことを期待
 4. 等値性(オブジェクト型)の判定(Objective-C専用)：
-    - `XCTAssertEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトであることを期待
-    - `XCTAssertNotEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトでないことを期待
+   - `XCTAssertEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトであることを期待
+   - `XCTAssertNotEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトでないことを期待
 5. 大小の判定：
-    - `XCTAssertGreaterThan(expr1,expr2)`：expr1>expr2であることを期待
-    - `XCTAssertGreaterThanOrEqual(expr1,expr2)`：expr1>=expr2であることを期待
-    - `XCTAssertLessThan(expr1,expr2)`：expr1<expr2であることを期待
-    - `XCTAssertLessThanOrEqual(expr1,expr2)`：expr1<=expr2であることを期待
+   - `XCTAssertGreaterThan(expr1,expr2)`：expr1>expr2であることを期待
+   - `XCTAssertGreaterThanOrEqual(expr1,expr2)`：expr1>=expr2であることを期待
+   - `XCTAssertLessThan(expr1,expr2)`：expr1<expr2であることを期待
+   - `XCTAssertLessThanOrEqual(expr1,expr2)`：expr1<=expr2であることを期待
 6. 失敗させる：
-    - `XCTFail()`：テストを失敗させる(中断はされない)
+   - `XCTFail()`：テストを失敗させる(中断はされない)
 7. 例外の判定：
-    - `XCTAssertThrowsError(expr,errorHandler)`：exprが何らかの例外をスローすることを期待
-    - `XCTAssertNoThrow(expr)`：exprが例外をスローしないことを期待
+   - `XCTAssertThrowsError(expr,errorHandler)`：exprが何らかの例外をスローすることを期待
+   - `XCTAssertNoThrow(expr)`：exprが例外をスローしないことを期待
 
 ### アサーションの共通引数
 

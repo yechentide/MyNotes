@@ -16,13 +16,12 @@ let queue = DispatchQueue.global(qos: .userInitiated)
     
 // MARK: dispatch queueへのタスクの追加
 queue.async {
-	Thread.sleep(forTimeInterval: 2.0)
-	if Thread.isMainThread {
-		print("メインスレッド")
-	} else {
-		print("not メインスレッド")
-	}
+    Thread.sleep(forTimeInterval: 2.0)
+    if Thread.isMainThread {
+        print("メインスレッド")
+    } else {
+        print("not メインスレッド")
+    }
 }
 print("hhh")
 ```
-

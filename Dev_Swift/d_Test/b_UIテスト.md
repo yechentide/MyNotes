@@ -4,8 +4,8 @@
 
 - 公式(Xcode標準)：`XCTest Framework`
 - サードパティ：
-    1. `EarlGrey`
-    2. `Appium`
+  1. `EarlGrey`
+  2. `Appium`
 
 ## XCTest Framework
 
