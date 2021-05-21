@@ -5,8 +5,8 @@
 ```swift
 var count = 0
 var timer: Timer? = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
-	count += 1
-	print("\(count) FIRE!!!")
+    count += 1
+    print("\(count) FIRE!!!")
 })
 RunLoop.main.add(timer!, forMode: .default)
 RunLoop.main.run()
@@ -18,10 +18,10 @@ timer = nil
 
 ## Timerの生成
 
-* `TimeInterval型の引数`：実行の時間間隔。単位は秒。
-* `repeats`：falseの場合、１回実行した後に、タイマーが自動的に無効になる
-* `block`：実行するクロージャ
-* `selector`：実行する関数
+- `TimeInterval型の引数`：実行の時間間隔。単位は秒。
+- `repeats`：falseの場合、１回実行した後に、タイマーが自動的に無効になる
+- `block`：実行するクロージャ
+- `selector`：実行する関数
 
 ```swift
 class func scheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer
@@ -37,8 +37,7 @@ init(fireAt: Date, interval: TimeInterval, target: Any, selector: Selector, user
 
 ## CLIでの利用
 
-iOSアプリなどでは、Timerをそのまま使えるが、
-
+iOSアプリなどでは、Timerをそのまま使えるが、  
 Command Line Toolの中でTimerを使う場合、`RunLoop`を使う必要がある。
 
 ```swift
@@ -46,7 +45,7 @@ RunLoop.main.add(タイマー名, forMode: .default)
 RunLoop.main.run()
 ```
 
+## 参考文献
+
 [参考：Scheduled Timer won't fire](https://stackoverflow.com/questions/45021881/scheduled-timer-wont-fire)
-
 [参考：When Would You Use a Run Loop?](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW24)
-
