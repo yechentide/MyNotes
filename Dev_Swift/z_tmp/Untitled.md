@@ -6,13 +6,13 @@
 
 ```swift
 self.init(bigEndian: 
-	data[data.startIndex..<(data.startIndex + length)]
-	.advanced(by: 0)
-	.withUnsafeBytes {
-		$0.load(as: Self.self)
-	})
+    data[data.startIndex..<(data.startIndex + length)]
+    .advanced(by: 0)
+    .withUnsafeBytes {
+        $0.load(as: Self.self)
+    })
 self.init(littleEndian: nbtData.withUnsafeBytes{
-	$0.load(as: Self.self)
+    $0.load(as: Self.self)
 })
 ```
 
@@ -20,13 +20,13 @@ self.init(littleEndian: nbtData.withUnsafeBytes{
 
 ```swift
 self.init(bitPattern: 
-	data[data.startIndex..<(data.startIndex + length)]
-	.advanced(by: 0)
-	.withUnsafeBytes {
-        UInt32(bigEndian: $0.load(as: UInt32.self))			// Doubleの場合はUInt64.self
+    data[data.startIndex..<(data.startIndex + length)]
+    .advanced(by: 0)
+    .withUnsafeBytes {
+        UInt32(bigEndian: $0.load(as: UInt32.self))         // Doubleの場合はUInt64.self
     })
 self.init(bitPattern: nbtData.withUnsafeBytes{
-	$0.load(as: UInt32.self)								// Doubleの場合はUInt64.self
+    $0.load(as: UInt32.self)                                // Doubleの場合はUInt64.self
 })
 ```
 
@@ -54,17 +54,17 @@ withUnsafeBytes(of: bitPattern.bigEndian) { Data($0) }
 
 ### 整数タグ
 
-* FixedWidthInteger
+- FixedWidthInteger
 
 ### 文字列タグ
 
-* RawRepresentable
-* Hashable
+- RawRepresentable
+- Hashable
 
 ### リストタグ
 
-* RandomAccessCollection
-* RangeReplaceableCollection
+- RandomAccessCollection
+- RangeReplaceableCollection
 
 ## プログラムから画像生成
 
@@ -127,4 +127,3 @@ let nsImage = NSImage(
     }
 }
 ```
-
