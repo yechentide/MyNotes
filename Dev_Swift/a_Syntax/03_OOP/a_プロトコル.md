@@ -2,23 +2,18 @@
 
 ## プロトコルとは
 
-==必ず実装しなければならない==プロパティやメソッドを指定した仕様書
-
-Javaのinterfaceと同じ
-
-プロトコル内では、プロパティの初期値やメソッドの内容を定義しない
-
-他のプロトコルを継承できる
-
-構造体、列挙型、クラスに使える
-
+==必ず実装しなければならない==プロパティやメソッドを指定した仕様書  
+Javaのinterfaceと同じ  
+プロトコル内では、プロパティの初期値やメソッドの内容を定義しない  
+他のプロトコルを継承できる  
+構造体、列挙型、クラスに使える  
 拡張ができる
 
 ### 宣言の概要
 
-プロトコルに含められる宣言
-`{get set}`は読み書き可能、`{get}`はread only
-関数の前に`optional`をつけると、その関数を必ずしも実装しなくても良い
+プロトコルに含められる宣言  
+`{get set}`は読み書き可能、`{get}`はread only  
+関数の前に`optional`をつけると、その関数を必ずしも実装しなくても良い  
 構造体と同じ、インスタンスメソッドで、インスタンス変数やselfを書き換える場合、それの前に`mutating`をつける
 
 ```swift
@@ -55,16 +50,15 @@ var 方法2: NewProtocol
 
 ### プロトコルを型として使う
 
-プロトコルを型として使える
-そうすると、そのプロトコルに準拠したインスタンスを扱えるようになる
-その時、インスタンスの中の、プロトコルに宣言されてないものは使えない
-
+プロトコルを型として使える  
+そうすると、そのプロトコルに準拠したインスタンスを扱えるようになる  
+その時、インスタンスの中の、プロトコルに宣言されてないものは使えない  
 ただし、付属型を指定したものや、`Self`を使った宣言がある場合は、型として使えない
 
 ### 付属型の宣言
 
-構造体やクラスなど、定義内にネスト型を定義するように、プロトコルも付属型を指定できる
-`associatedtype`キーワードを使って付属型を宣言する
+構造体やクラスなど、定義内にネスト型を定義するように、プロトコルも付属型を指定できる  
+`associatedtype`キーワードを使って付属型を宣言する  
 この宣言はプロトコル定義内にのみ記述できる
 
 ```swift
@@ -76,12 +70,9 @@ protocol 名前 {
 
 ### 付属型の確定
 
-プロトコル内で`associatedtype`で宣言された付属型はジェネリクス機能の１つである
-
-特定の型が指定されていない場合は、==型パラメータとして機能する==
-
-コンパイル時に静的に解析され、実際の型の定義に置き換えられる
-
+プロトコル内で`associatedtype`で宣言された付属型はジェネリクス機能の１つである  
+特定の型が指定されていない場合は、==型パラメータとして機能する==  
+コンパイル時に静的に解析され、実際の型の定義に置き換えられる  
 プロトコルを採用した構造体などの中で、具体的な型を割り当てる必要がある
 
 1. `typealias`を使って別の型を割り当てる
@@ -96,37 +87,32 @@ protocol SimpleVector {
 }
 
 struct VectorFloat: SimpleVector {
-    typealias Element = Float		// 具体的な型は別名で指定する
+    typealias Element = Float       // 具体的な型は別名で指定する
     var x, y: Float
 }
 struct VectorDouble: SimpleVector {
-    var x, y: Double				// 具体的な型は推論される
-    init(x: Element, y: Element) {	// 付属型を型としても使える
+    var x, y: Double                // 具体的な型は推論される
+    init(x: Element, y: Element) {  // 付属型を型としても使える
         self.x = x; self.y = y
     }
 }
 struct VectorGrade: SimpleVector, CustomStringConvertible {
-    enum Element: String { case A, B, C, D, X }		// ネスト型を定義
+    enum Element: String { case A, B, C, D, X }     // ネスト型を定義
     var x, y: Element
 }
 ```
 
 ### 付属型の参照
 
-プロトコルを採用したものの定義中から、プロトコル内で宣言されている付属型を参照する場合、
-
-`プロトコル.付属型`ではなく、`型.付属型`のように記述する。
-
-例えば上の例では、`VectorDouble.Element`で参照できる
-
+プロトコルを採用したものの定義中から、プロトコル内で宣言されている付属型を参照する場合、  
+`プロトコル.付属型`ではなく、`型.付属型`のように記述する。  
+例えば上の例では、`VectorDouble.Element`で参照できる  
 プロトコル内であれば、`Self.Element`のように明示的に記述することもできる
 
 ### Selfキーワード
 
-構造体でも`Self`が使われるが、それは「Selfを含む構造体」を示している
-
-プロトコルの`Self`は、==プロトコルを採用した具体的な型そのものを示す==
-
+構造体でも`Self`が使われるが、それは「Selfを含む構造体」を示している  
+プロトコルの`Self`は、==プロトコルを採用した具体的な型そのものを示す==  
 両方において、インスタンスを生成する型を表す点は共通している
 
 ```swift
@@ -143,38 +129,27 @@ protocol TransVector {
 
 付属型の型パラメータに対して、プロトコル宣言の段階で、制約条件を付けることができる
 
-* `associatedtype A`
-
+- `associatedtype A`  
     型パラメータAに何の制約もない
-
-* `associatedtype A: プロトコルP`
-
+- `associatedtype A: プロトコルP`  
     型パラメータAは、プロトコルPに適合する必要がある
-
-* `associatedtype A = 型T`
-
-    このプロトコルを採用した構造体などで、具体的な型を定義されない場合は、型Tをデフォルト値として使用
-
+- `associatedtype A = 型T`  
+    このプロトコルを採用した構造体などで、具体的な型を定義されない場合は、型Tをデフォルト値として使用  
     上の制約と組み合わせることもできる：`associatedtype A: プロトコルP = 型T`
-
-* where条件
-
-    上の３つのいずれかの後ろにwhere節をおいて、型パラメータAに関する条件を記述できる
-
+- where条件  
+    上の３つのいずれかの後ろにwhere節をおいて、型パラメータAに関する条件を記述できる  
     条件は２種類で、複数の条件は`,`で区切る
 
     1. `型: プロトコルP`：型はプロトコルPに適合する必要がある
     2. `型1 == 型2`：型1と型2は同じ型である
 
-    さらに、プロトコル定義で別のプロトコルを継承するとき、その付属型に対して制約を指定できる
-
-    例：`protocol G: P where 条件`
-
+    さらに、プロトコル定義で別のプロトコルを継承するとき、その付属型に対して制約を指定できる  
+    例：`protocol G: P where 条件`  
     右の条件を満たした場合に限って、プロトコルGはプロトコルPを継承する
 
 ```swift
-protocol EqVector: Equatable {		// 比較可能なEquatableを継承
-    associatedtype Element			// 付属型に適合するプロトコルを指定
+protocol EqVector: Equatable {      // 比較可能なEquatableを継承
+    associatedtype Element          // 付属型に適合するプロトコルを指定
     var x: Element {get set}
     var y: Element {get set}
 }
@@ -187,8 +162,7 @@ protocol EqVector: SimpleVector, Equatable where Self.Element: Equatable {}
 
 ### Equatable
 
-等しいかどうかを判断するためのプロトコル
-
+等しいかどうかを判断するためのプロトコル  
 `==`だけ定義すれば良い
 
 ```swift
@@ -200,8 +174,7 @@ public protocol Equatable {
 
 ### Comparable
 
-大小を比較するためのプロトコル
-
+大小を比較するためのプロトコル  
 `==` `<`だけを定義すれば良い
 
 ```swift
@@ -216,12 +189,9 @@ public protocol Comparable : Equatable {
 
 ### Sequence
 
-一度に１つずつ値を取り出せるような値の列を定めるプロトコル（配列など）
-
-このプロトコルに適合したものは、`for in`文で使える
-
-`IteratorProtocol`はシーケンスに要素を１つずつ提供する
-
+一度に１つずつ値を取り出せるような値の列を定めるプロトコル（配列など）  
+このプロトコルに適合したものは、`for in`文で使える  
+`IteratorProtocol`はシーケンスに要素を１つずつ提供する  
 そのため、`Self.Element == Self.Iterator.Element`という制約がある
 
 ```swift
@@ -246,9 +216,9 @@ public protocol Sequence {
     @inlinable public func enumerated() -> EnumeratedSequence<Self>
     @inlinable public func elementsEqual<OtherSequence>(_ other: OtherSequence, by areEquivalent: (Self.Element, OtherSequence.Element) throws -> Bool) rethrows -> Bool where OtherSequence : Sequence
     @inlinable public func contains(where predicate: (Self.Element) throws -> Bool) rethrows -> Bool
-	@inlinable public func reversed() -> [Self.Element]
+    @inlinable public func reversed() -> [Self.Element]
 
-	@warn_unqualified_access
+    @warn_unqualified_access
     @inlinable public func min(by areInIncreasingOrder: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?
     @warn_unqualified_access
     @inlinable public func max(by areInIncreasingOrder: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?
@@ -257,14 +227,10 @@ public protocol Sequence {
 
 ### Collection
 
-CollectionはSequenceを継承している
-
-複数のインスタンスを格納でき、添字で指定した要素にアクセスできる
-
-==コレクションの添字は整数とは限らない==
-
-添字を指定した要素を変更する機能はCollectionにはなく、
-
+CollectionはSequenceを継承している  
+複数のインスタンスを格納でき、添字で指定した要素にアクセスできる  
+==コレクションの添字は整数とは限らない==  
+添字を指定した要素を変更する機能はCollectionにはなく、  
 Collectionを継承した`MutableCollection`に定義されている
 
 ```swift
@@ -293,4 +259,3 @@ public protocol Collection : Sequence {
     func formIndex(after i: inout Self.Index)
 }
 ```
-
