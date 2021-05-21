@@ -2,8 +2,8 @@
 
 ## ツール
 
-* 公式(Xcode標準)：`XCTest Framework`
-* サードパティ：
+- 公式(Xcode標準)：`XCTest Framework`
+- サードパティ：
     1. `Quick/Nimble`：BDDフレームワーク
     2. `OCMock`
     3. `Mockingjay`：HTTP通信のモック
@@ -34,16 +34,13 @@ class テスト用クラス名: XCTestCase {
 }
 ```
 
-`@testable import`を使えば、モジュール内の`internal`な要素もアクセスできるようになる
-
-テストメソッド名は`test`から始まる必要がある。
-
+`@testable import`を使えば、モジュール内の`internal`な要素もアクセスできるようになる  
+テストメソッド名は`test`から始まる必要がある。  
 そうでない場合、テストメソッドとして認識されない
 
 ### テストの階層化
 
-１つのテストメソッド内にたくさんのアサーションがある場合、グループ化して階層化することができる
-
+１つのテストメソッド内にたくさんのアサーションがある場合、グループ化して階層化することができる  
 `XCTContext.runActivity`はネストして記述できる
 
 ```swift
@@ -61,41 +58,39 @@ func testExample() {
 
 ### アサーション一覧
 
-「期待値」と「実際の値」を比較するための専用メソッドのこと
-
-`expr` = `expression` = 式
-
+「期待値」と「実際の値」を比較するための専用メソッドのこと  
+`expr` = `expression` = 式  
 なお、期待値と実際値のどれを最初の引数にするかは、決まっていないらしい
 
 1. Boolの判定：
-    * `XCTAssertTrue(expr)`：exprがtrueであることを期待
-    * `XCTAssertFalse(expr)`：exprがfalseであることを期待
-    * `XCTAssert(expr)`：XCTAssertTrue(expr)と同じ
+    - `XCTAssertTrue(expr)`：exprがtrueであることを期待
+    - `XCTAssertFalse(expr)`：exprがfalseであることを期待
+    - `XCTAssert(expr)`：XCTAssertTrue(expr)と同じ
 2. nilの判定：
-    * `XCTAssertNil(expr)`：exprがnilであることを期待
-    * `XCTAssertNotNil(expr)`：exprがnilでないことを期待
+    - `XCTAssertNil(expr)`：exprがnilであることを期待
+    - `XCTAssertNotNil(expr)`：exprがnilでないことを期待
 3. 等値性の判定：
-    * `XCTAssertEqual(expr1,expr2)`：expr1とexpr2が一致することを期待
-    * `XCTAssertNotEqual(expr1,expr2)`：expr1とexpr2が一致しないことを期待
+    - `XCTAssertEqual(expr1,expr2)`：expr1とexpr2が一致することを期待
+    - `XCTAssertNotEqual(expr1,expr2)`：expr1とexpr2が一致しないことを期待
 4. 等値性(オブジェクト型)の判定(Objective-C専用)：
-    * `XCTAssertEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトであることを期待
-    * `XCTAssertNotEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトでないことを期待
+    - `XCTAssertEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトであることを期待
+    - `XCTAssertNotEqualObjects(expr1,expr2)`：expr1とexpr2が同一オブジェクトでないことを期待
 5. 大小の判定：
-    * `XCTAssertGreaterThan(expr1,expr2)`：expr1>expr2であることを期待
-    * `XCTAssertGreaterThanOrEqual(expr1,expr2)`：expr1>=expr2であることを期待
-    * `XCTAssertLessThan(expr1,expr2)`：expr1<expr2であることを期待
-    * `XCTAssertLessThanOrEqual(expr1,expr2)`：expr1<=expr2であることを期待
+    - `XCTAssertGreaterThan(expr1,expr2)`：expr1>expr2であることを期待
+    - `XCTAssertGreaterThanOrEqual(expr1,expr2)`：expr1>=expr2であることを期待
+    - `XCTAssertLessThan(expr1,expr2)`：expr1<expr2であることを期待
+    - `XCTAssertLessThanOrEqual(expr1,expr2)`：expr1<=expr2であることを期待
 6. 失敗させる：
-    * `XCTFail()`：テストを失敗させる(中断はされない)
+    - `XCTFail()`：テストを失敗させる(中断はされない)
 7. 例外の判定：
-    * `XCTAssertThrowsError(expr,errorHandler)`：exprが何らかの例外をスローすることを期待
-    * `XCTAssertNoThrow(expr)`：exprが例外をスローしないことを期待
+    - `XCTAssertThrowsError(expr,errorHandler)`：exprが何らかの例外をスローすることを期待
+    - `XCTAssertNoThrow(expr)`：exprが例外をスローしないことを期待
 
 ### アサーションの共通引数
 
-* `_ message: String`：テストの説明文
-* `file: StaticString`：ファイル名
-* `line: Uint`：行番号
+- `_ message: String`：テストの説明文
+- `file: StaticString`：ファイル名
+- `line: Uint`：行番号
 
 ### オブジェクトの参照が等しいことを検証
 
@@ -118,16 +113,15 @@ func assertXXX(_ 必要な引数: 型, file: StaticString=#file, line: Uint=#lin
 
 ### 非同期なAPIのテスト
 
-`XCTestExpectation`を利用してテストを行う
-
+`XCTestExpectation`を利用してテストを行う  
 テスト対象の非同期メソッド：
 
 ```swift
 func echo(message: String, _ handler: @escaping (String) -> Void) {
     DispatchQueue.global().async {
-        Thread.sleep(forTimeInterval: 3)	// 3秒間待機
+        Thread.sleep(forTimeInterval: 3)    // 3秒間待機
         DispatchQueue.main.async {
-            handler("\(message)!")			// messageに「!」を追加してコールバックを呼び出す
+            handler("\(message)!")          // messageに「!」を追加してコールバックを呼び出す
         }
     }
 }
@@ -137,7 +131,7 @@ func echo(message: String, _ handler: @escaping (String) -> Void) {
 
 ```swift
 echo(message: "Hello") { (message) in
-    print(message)			// 3秒後、「hello!」が出力される
+    print(message)      // 3秒後、「hello!」が出力される
 }
 ```
 
@@ -151,8 +145,8 @@ func testExample() {
     echo(message: "Hello") { (message) in
         XCTAssertEqual(message, "Hello!")
 
-        exp.fulfill()	// expの待機を解除
-	}
+        exp.fulfill()       // expの待機を解除
+    }
     
     // expに対してfulfill()が呼び出されるまで待機(5秒でタイムアウト)
     wait(for: [exp], timeout: 5)
