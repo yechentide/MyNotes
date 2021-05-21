@@ -22,11 +22,11 @@ git config --global core.quotepath fasle
 
 ```shell
 # 直前のコミットメッセージを変更
-git commit --amend							# 指定されたエディタで編集
+git commit --amend                  # 指定されたエディタで編集
 git commit --amend -m "正しいメッセージ"
 
 # もっと前のメッセージを変更
-git rebase -i HEAD~3						# 修正箇所の"pick"を"edit"に変えて保存
+git rebase -i HEAD~3                # 修正箇所の"pick"を"edit"に変えて保存
 git commit --amend
 git rebase --continue
 ```
@@ -243,11 +243,8 @@ git branch -m <元の名前> <新しい名前>
 ## 参考サイト
 
 [Qiita - 【Git】基本コマンド](https://qiita.com/konweb/items/621722f67fdd8f86a017)
-
 [Qiita - Gitの基本的な使い方メモ](https://qiita.com/opengl-8080/items/451c5967cbbc262f4f0d)
-
 [Qiita - GitHubの使い方と実践](https://qiita.com/nnahito/items/565f8755e70c51532459)
-
 [Qiita - いまさらだけどGitを基本から分かりやすくまとめてみた](https://qiita.com/gold-kou/items/7f6a3b46e2781b0dd4a0)
 
 ## Gitコマンドのオプション
