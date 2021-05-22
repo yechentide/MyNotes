@@ -9,7 +9,7 @@
 ```go
 type 型名 interface {
     メソッド名1(引数の型, ...) (返り値の型, ...)
-	.....
+    .....
     メソッド名N(引数の型, ...) (返り値の型, ...)
 }
 ```
@@ -27,8 +27,7 @@ obj = "String"
 
 ## 型アサーション
 
-インターフェースの値 `<変数>` が具体的な型 `<型>` を保持し、基になる `<型>` の値を変数 `value` に代入することを主張
-
+インターフェースの値 `<変数>` が具体的な型 `<型>` を保持し、基になる `<型>` の値を変数 `value` に代入することを主張  
 ２行目は、1番目の変数に型アサーション成功時に実際の値が格納され、2番目の変数には型アサーションの成功の有無（true/false）が格納される
 
 ```go
@@ -40,21 +39,21 @@ value, status := <変数>.(<型>)
 
 ```go
 func main() {
-	var intface interface{} = "hello"
+    var intface interface{} = "hello"
 
-	variable := intface.(string)
-	fmt.Println(variable) //=> hello
+    variable := intface.(string)
+    fmt.Println(variable) //=> hello
 
-	variable, ok := intface.(string)
-	fmt.Println(variable, ok) //=> hello true
+    variable, ok := intface.(string)
+    fmt.Println(variable, ok) //=> hello true
 
-	float, ok := intface.(float64)
-	fmt.Println(float, ok) //=> 0 false
-	//格納失敗したが、成功したかの有無を確かめるokが存在するのでエラーにはならない。
+    float, ok := intface.(float64)
+    fmt.Println(float, ok) //=> 0 false
+    //格納失敗したが、成功したかの有無を確かめるokが存在するのでエラーにはならない。
 
-	float = intface.(float64)
-	fmt.Println(float) //=> panic: interface conversion: interface {} is string, not float64
-	//成功したかの有無を確かめるokが存在しないのでエラーが発生する。
+    float = intface.(float64)
+    fmt.Println(float) //=> panic: interface conversion: interface {} is string, not float64
+    //成功したかの有無を確かめるokが存在しないのでエラーが発生する。
 }
 ```
 
@@ -113,6 +112,3 @@ func main(){
   IntroForPerson(mike) //=> Hello World
 }
 ```
-
-
-
