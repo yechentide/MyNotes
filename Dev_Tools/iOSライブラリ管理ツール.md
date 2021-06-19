@@ -26,7 +26,7 @@ gem install -n /usr/local/bin cocoapods
 1. プロジェクトのルートディレクトリに移動する
 2. `Podfile`というファイルを作成する (または`pod init`コマンドで作成)
 3. 利用したいライブラリをPodfileファイルに記述する
-   プラットフォーム、サポートバージョン、プロジェクト名、導入したいライブラリを指定する
+    プラットフォーム、サポートバージョン、プロジェクト名、導入したいライブラリを指定する
 
     ```cocoapods
         platform :ios, '11.0'
@@ -60,7 +60,7 @@ gem install -n /usr/local/bin cocoapods
     ```
 
 3. CocoaPods Trunkへのアカウント登録(初回のみ)  
-   登録情報は`pod trunk me`で確認できる
+    登録情報は`pod trunk me`で確認できる
 
     ```shell
     pod trunk register <メールアドレス> <開発者名>
@@ -92,5 +92,5 @@ brew install carthage
 
 ### Carthageでライブラリを導入する
 
-[iOSのCarthage導入手順と注意点](https://blog.mothule.com/ios/carthage/ios-carthage-install-guide)
-[Carthageの使い方を体系的に理解する](https://blog.mothule.com/ios/carthage/ios-carthage)
+- [iOSのCarthage導入手順と注意点](https://blog.mothule.com/ios/carthage/ios-carthage-install-guide)
+- [Carthageの使い方を体系的に理解する](https://blog.mothule.com/ios/carthage/ios-carthage)

@@ -31,7 +31,7 @@ import(
 )
 
 func main() {
-     log.Println(runtime.NumGoroutine())
+    log.Println(runtime.NumGoroutine())
 }
 ```
 
@@ -56,8 +56,8 @@ var 変数 = make(chan 型)    // バッファの大きさは省略可能
 チャネルオペレータの `<-` を用いる事で値の送受信ができる
 
 ```go
-ch <- data        //dataをchへ送信する(vをchに書き込む)
-arg := <-ch        //chから受信した変数をargへ割り当てる(chの値を読み込む)
+ch <- data      //dataをchへ送信する(vをchに書き込む)
+arg := <-ch     //chから受信した変数をargへ割り当てる(chの値を読み込む)
 ```
 
 Goroutineを使った関数内でChannelに送信し、この関数の外部で受信することができる  

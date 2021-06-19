@@ -47,5 +47,5 @@ RunLoop.main.run()
 
 ## 参考文献
 
-[参考：Scheduled Timer won't fire](https://stackoverflow.com/questions/45021881/scheduled-timer-wont-fire)
-[参考：When Would You Use a Run Loop?](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW24)
+- [参考：Scheduled Timer won't fire](https://stackoverflow.com/questions/45021881/scheduled-timer-wont-fire)
+- [参考：When Would You Use a Run Loop?](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW24)

@@ -5,8 +5,8 @@
 `"`で囲むと展開されない
 
 ```shell
-echo a{1,2,3}			# a1 a2 a3
-echo "a{1,2,3}"			# a{1,2,3}
+echo a{1,2,3}       # a1 a2 a3
+echo "a{1,2,3}"     # a{1,2,3}
 ```
 
 ## シーケンス式 (sequence expression)
@@ -41,7 +41,7 @@ for i in {a..f}; do echo $i; done
 
 ```shell
 now=
-echo ${now:-$(date)}		# 2020年 12月 3日 木曜日 11時47分57秒 JST
+echo ${now:-$(date)}        # 2020年 12月 3日 木曜日 11時47分57秒 JST
 ```
 
 ### `${parameter:=word}`
@@ -50,31 +50,29 @@ echo ${now:-$(date)}		# 2020年 12月 3日 木曜日 11時47分57秒 JST
 
 ```shell
 now=
-echo ${now:=$(date)}		# 2020年 12月 3日 木曜日 11時47分57秒 JST
-echo $now					# 2020年 12月 3日 木曜日 11時47分57秒 JST
+echo ${now:=$(date)}        # 2020年 12月 3日 木曜日 11時47分57秒 JST
+echo $now                   # 2020年 12月 3日 木曜日 11時47分57秒 JST
 ```
 
 ### `${parameter:?word}`
 
-変数 `parameter` が未定義かnull文字の場合、`word`の展開された結果が標準エラーに出力される
-
+変数 `parameter` が未定義かnull文字の場合、`word`の展開された結果が標準エラーに出力される  
 `word`が未定義の場合は、代わりのメッセージが出力される
 
 ```shell
 now=
-echo ${now:?}				# bash: now: parameter null or not set
-echo ${now:?"is null"}		# bash: now: is null
+echo ${now:?}               # bash: now: parameter null or not set
+echo ${now:?"is null"}      # bash: now: is null
 ```
 
 ### `${parameter:+word}`
 
-変数 `parameter` が定義されている（未定義かnull文字以外）場合、`word` が展開され、それ以外の場合は空文字が展開される
-
+変数 `parameter` が定義されている（未定義かnull文字以外）場合、`word` が展開され、それ以外の場合は空文字が展開される  
 wordを変数paramterに保存しない
 
 ```shell
 now=$(date +"%Y/%m/%d")
-echo ${now:+"today is $now"}		# today is 2019/04/30
+echo ${now:+"today is $now"}    # today is 2019/04/30
 ```
 
 ## 部分文字列展開 (Substring Expansion)
@@ -83,14 +81,14 @@ echo ${now:+"today is $now"}		# today is 2019/04/30
 
 ```shell
 var=0123456789abc
-echo ${var:5}			# 56789abc
+echo ${var:5}           # 56789abc
 ```
 
 ### `${parameter:offset:length}`
 
 ```shell
 var=0123456789abc
-echo ${var:5:3}			# 567
+echo ${var:5:3}         # 567
 ```
 
 ## パターンに一致する部分を削除
@@ -106,8 +104,8 @@ echo ${var:5:3}			# 567
 ```shell
 var=123123123abc456456456
 
-echo ${var#12*3}		# 123123abc456456456
-echo ${var##12*3}		# abc456456456
+echo ${var#12*3}        # 123123abc456456456
+echo ${var##12*3}       # abc456456456
 ```
 
 ### `${parameter%word}`
@@ -121,8 +119,8 @@ echo ${var##12*3}		# abc456456456
 ```shell
 var=123123123abc456456456
 
-echo ${var%45*6}		# 123123123abc456456
-echo ${var%%45*6}		# 123123123abc
+echo ${var%45*6}        # 123123123abc456456
+echo ${var%%45*6}       # 123123123abc
 ```
 
 ## パターンに一致する部分を置換
@@ -133,7 +131,7 @@ echo ${var%%45*6}		# 123123123abc
 
 ```shell
 var=123123123abc456456456
-echo ${var/[[:digit::]]/*}		# *23123123abc456456456
+echo ${var/[[:digit::]]/*}      # *23123123abc456456456
 ```
 
 ### `${parameter//pattern/string}`
@@ -142,7 +140,7 @@ echo ${var/[[:digit::]]/*}		# *23123123abc456456456
 
 ```shell
 var=123123123abc456456456
-echo ${var//[[:digit::]]/*}		# *********abc*********
+echo ${var//[[:digit::]]/*}     # *********abc*********
 ```
 
 ## コマンド置換 (Command Substitution)
@@ -152,7 +150,7 @@ echo ${var//[[:digit::]]/*}		# *********abc*********
 従来からある記法
 
 ```shell
-NOW=`date "+%Y/%m/%d %H:%M:%S"`		# 2020/12/03 12:02:51
+NOW=`date "+%Y/%m/%d %H:%M:%S"`     # 2020/12/03 12:02:51
 ```
 
 ### `$( )`
@@ -160,7 +158,7 @@ NOW=`date "+%Y/%m/%d %H:%M:%S"`		# 2020/12/03 12:02:51
 新しい記法。ネスト(入れ子)ができる
 
 ```shell
-NOW=$(date "+%Y/%m/%d %H:%M:%S")	# 2020/12/03 12:02:51
+NOW=$(date "+%Y/%m/%d %H:%M:%S")    # 2020/12/03 12:02:51
 ```
 
 ## 算術展開 (Arithmetic Expansion)
@@ -169,8 +167,6 @@ NOW=$(date "+%Y/%m/%d %H:%M:%S")	# 2020/12/03 12:02:51
 
 ```shell
 x=10; y=5
-echo $x $y							# 10 5
-echo "x + y = $(( x + y ))"			# x + y = 15
+echo $x $y                      # 10 5
+echo "x + y = $(( x + y ))"     # x + y = 15
 ```
-
-

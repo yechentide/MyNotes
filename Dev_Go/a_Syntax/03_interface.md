@@ -76,7 +76,7 @@ default: ...
 
 ```go
 func (引数 構造体名) 関数名(){
-     関数の中身
+    関数の中身
 }
 ```
 
@@ -91,7 +91,7 @@ type People interface{
 }
 
 func IntroForPerson(arg People) {
-     arg.intro();
+    arg.intro();
 }
 
 //Person構造体のメソッドintro()
@@ -101,14 +101,14 @@ func (p *Person) intro() {
 
 //Person2構造体のメソッドintro()
 func (p *Person2) intro() {
-     fmt.Println("Hello World")
+    fmt.Println("Hello World")
 }
 
 func main(){
-  bob := new(Person)
-  mike := new(Person2) 
+    bob := new(Person)
+    mike := new(Person2) 
 
-  IntroForPerson(bob) //=> Hello World
-  IntroForPerson(mike) //=> Hello World
+    IntroForPerson(bob) //=> Hello World
+    IntroForPerson(mike) //=> Hello World
 }
 ```
